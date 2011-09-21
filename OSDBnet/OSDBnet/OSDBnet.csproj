@@ -44,6 +44,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AnonymousClient.cs" />
+    <Compile Include="HashHelper.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Osdb.cs" />
     <Compile Include="DataStructs.cs" />
     <Compile Include="IAnonymousClient.cs" />

@@ -8,11 +8,16 @@ using OSDBnet;
 namespace OSDBnet.SimpleTest {
 	class Program {
 		static void Main(string[] args) {
+			var hash1 = HashHelper.ComputeMovieHash(@"D:\Downloads\osdbsamples\breakdance.avi");
+			Console.WriteLine("hash1: {0}", HashHelper.ToHexadecimal(hash1));
+			var hash2 = HashHelper.ComputeMovieHash(@"D:\Downloads\osdbsamples\dummy.bin");
+			Console.WriteLine("hash2: {0}", HashHelper.ToHexadecimal(hash2));
+			/*
 			using (var client = Osdb.Login("pt")) {
 				Console.WriteLine("Logged In.. press 'enter' key to logout");
 				Console.ReadLine();
 			}
-
+			 * */
 			Console.WriteLine("Logged out.. press 'enter' key to exit");
 			Console.ReadLine();
 		}
