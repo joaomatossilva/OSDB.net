@@ -14,7 +14,9 @@ namespace OSDBnet.SimpleTest {
 			Console.WriteLine("hash2: {0}", HashHelper.ToHexadecimal(hash2));
 			
 			using (var client = Osdb.Login("pt")) {
-				client.SearchSubtitles(@"D:\Downloads\Eureka.S04E11.Liftoff.HDTV.XviD-FQM.avi");
+				var subtitles = client.SearchSubtitles(@"D:\Downloads\Eureka.S04E11.Liftoff.HDTV.XviD-FQM.avi");
+				var subtitle = subtitles.First();
+				client.DownloadSubtitleToPath(@"D:\Downloads", subtitle);
 			}
 
 			Console.WriteLine("Logged out.. press 'enter' key to exit");

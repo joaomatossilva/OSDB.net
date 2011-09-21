@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.IO;
+using System.Net;
+using ICSharpCode.SharpZipLib.GZip;
 
 namespace OSDBnet {
 	public class AnonymousClient : IAnonymousClient, IDisposable {
@@ -46,6 +48,44 @@ namespace OSDBnet {
 				subtitles.Add(BuildSubtitleObject(info));
 			}
 			return subtitles;
+		}
+
+		public void DownloadSubtitleToPath(string path, Subtitle subtitle) {
+			if (string.IsNullOrEmpty(path)) {
+				throw new ArgumentNullException("path");
+			}
+			if (null == subtitle) {
+				throw new ArgumentNullException("subtitle");
+			}
+			if (!Directory.Exists(path)) {
+				throw new ArgumentException("path should point to a valid location");
+			}
+
+			string destinationfile = Path.Combine(path, subtitle.SubtitleFileName);
+			string tempZipName = Path.GetTempFileName();
+			try {
+				WebClient webClient = new WebClient();
+				webClient.DownloadFile(subtitle.SubTitleDownloadLink, tempZipName);
+
+				using (FileStream subFile = File.OpenWrite(destinationfile))
+				using (FileStream tempFile = File.OpenRead(tempZipName)){
+					var gzip = new GZipInputStream(tempFile);
+					var buffer = new byte[4096];
+					var bufferSize = 0;
+					var readCount = 0;
+
+					do {
+						bufferSize = gzip.Read(buffer, readCount, buffer.Length);
+						if (bufferSize > 0) {
+							subFile.Write(buffer, readCount, bufferSize);
+						}
+					} while (bufferSize > 0);
+					gzip.Dispose();
+				}
+
+			} finally {
+				File.Delete(tempZipName);
+			}
 		}
 
 		public void  Dispose()
