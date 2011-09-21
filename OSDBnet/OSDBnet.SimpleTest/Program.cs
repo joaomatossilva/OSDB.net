@@ -12,12 +12,11 @@ namespace OSDBnet.SimpleTest {
 			Console.WriteLine("hash1: {0}", HashHelper.ToHexadecimal(hash1));
 			var hash2 = HashHelper.ComputeMovieHash(@"D:\Downloads\osdbsamples\dummy.bin");
 			Console.WriteLine("hash2: {0}", HashHelper.ToHexadecimal(hash2));
-			/*
+			
 			using (var client = Osdb.Login("pt")) {
-				Console.WriteLine("Logged In.. press 'enter' key to logout");
-				Console.ReadLine();
+				client.SearchSubtitles(@"D:\Downloads\Eureka.S04E11.Liftoff.HDTV.XviD-FQM.avi");
 			}
-			 * */
+
 			Console.WriteLine("Logged out.. press 'enter' key to exit");
 			Console.ReadLine();
 		}

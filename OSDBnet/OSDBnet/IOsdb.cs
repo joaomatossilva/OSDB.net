@@ -17,5 +17,8 @@ namespace OSDBnet {
 		[XmlRpcMethod("LogOut")]
 		ResponseBase Logout(string token);
 
+		[XmlRpcMethod("SearchSubtitles")]
+		SearchSubtitlesResponse SearchSubtitles(string token, SearchSubtitlesRequest[] request);
+
 	}
 }
