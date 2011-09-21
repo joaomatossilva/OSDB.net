@@ -1,6 +1,18 @@
 ﻿using System;
+using CookComputing.XmlRpc;
 
 namespace OSDBnet {
+
+	public class ResponseBase {
+		public string status;
+		public double seconds;
+	}
+
+	[XmlRpcMissingMapping(MappingAction.Ignore)]
+	public class LoginResponse : ResponseBase {
+		public string token;
+	}
+
 	public struct ServerInfo {
 		public string subs_downloads;
 		public string movies_aka;

@@ -43,8 +43,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Client.cs" />
+    <Compile Include="AnonymousClient.cs" />
+    <Compile Include="Osdb.cs" />
     <Compile Include="DataStructs.cs" />
+    <Compile Include="IAnonymousClient.cs" />
     <Compile Include="IOsdb.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

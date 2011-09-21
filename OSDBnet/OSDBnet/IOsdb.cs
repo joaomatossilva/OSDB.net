@@ -10,5 +10,12 @@ namespace OSDBnet {
 	public interface IOsdb : IXmlRpcProxy {
 		[XmlRpcMethod("ServerInfo")]
 		ServerInfo ServerInfo();
+
+		[XmlRpcMethod("LogIn")]
+		LoginResponse Login(string username, string password, string language, string useragent);
+
+		[XmlRpcMethod("LogOut")]
+		ResponseBase Logout(string token);
+
 	}
 }
