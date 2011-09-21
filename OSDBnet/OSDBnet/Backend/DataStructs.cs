@@ -1,7 +1,7 @@
 ﻿using System;
 using CookComputing.XmlRpc;
 
-namespace OSDBnet {
+namespace OSDBnet.Backend {
 
 	public class ResponseBase {
 		public string status;

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.IO;
 using System.Net;
+using OSDBnet.Backend;
 using ICSharpCode.SharpZipLib.GZip;
 
 namespace OSDBnet {
@@ -50,7 +51,7 @@ namespace OSDBnet {
 			return subtitles;
 		}
 
-		public void DownloadSubtitleToPath(string path, Subtitle subtitle) {
+		public string DownloadSubtitleToPath(string path, Subtitle subtitle) {
 			if (string.IsNullOrEmpty(path)) {
 				throw new ArgumentNullException("path");
 			}
@@ -67,25 +68,13 @@ namespace OSDBnet {
 				WebClient webClient = new WebClient();
 				webClient.DownloadFile(subtitle.SubTitleDownloadLink, tempZipName);
 
-				using (FileStream subFile = File.OpenWrite(destinationfile))
-				using (FileStream tempFile = File.OpenRead(tempZipName)){
-					var gzip = new GZipInputStream(tempFile);
-					var buffer = new byte[4096];
-					var bufferSize = 0;
-					var readCount = 0;
-
-					do {
-						bufferSize = gzip.Read(buffer, readCount, buffer.Length);
-						if (bufferSize > 0) {
-							subFile.Write(buffer, readCount, bufferSize);
-						}
-					} while (bufferSize > 0);
-					gzip.Dispose();
-				}
+				UnZipSubtitleFileToFile(tempZipName, destinationfile);
 
 			} finally {
 				File.Delete(tempZipName);
 			}
+
+			return destinationfile;
 		}
 
 		public void  Dispose()
@@ -110,6 +99,24 @@ namespace OSDBnet {
 
 		~AnonymousClient() {
 			Dispose(false);
+		}
+
+		protected static void UnZipSubtitleFileToFile(string zipFileName, string subFileName) {
+			using (FileStream subFile = File.OpenWrite(subFileName))
+			using (FileStream tempFile = File.OpenRead(zipFileName)) {
+				var gzip = new GZipInputStream(tempFile);
+				var buffer = new byte[4096];
+				var bufferSize = 0;
+				var readCount = 0;
+
+				do {
+					bufferSize = gzip.Read(buffer, readCount, buffer.Length);
+					if (bufferSize > 0) {
+						subFile.Write(buffer, readCount, bufferSize);
+					}
+				} while (bufferSize > 0);
+				gzip.Dispose();
+			}
 		}
 
 		protected static Subtitle BuildSubtitleObject(SearchSubtitlesInfo info) {

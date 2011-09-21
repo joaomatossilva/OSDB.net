@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using CookComputing.XmlRpc;
 
-namespace OSDBnet {
+namespace OSDBnet.Backend {
 	[XmlRpcUrl("http://api.opensubtitles.org/xml-rpc")]
 	public interface IOsdb : IXmlRpcProxy {
 		[XmlRpcMethod("ServerInfo")]

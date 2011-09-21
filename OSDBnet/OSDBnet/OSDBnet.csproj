@@ -51,9 +51,9 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Osdb.cs" />
-    <Compile Include="DataStructs.cs" />
+    <Compile Include="Backend\DataStructs.cs" />
     <Compile Include="IAnonymousClient.cs" />
-    <Compile Include="IOsdb.cs" />
+    <Compile Include="Backend\IOsdb.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Subtitle.cs" />
   </ItemGroup>
