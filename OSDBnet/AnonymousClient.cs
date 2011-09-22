@@ -26,7 +26,7 @@ namespace OSDBnet {
 			token = response.token;
 		}
 
-		public IEnumerable<Subtitle> SearchSubtitles(string filename) {
+		public IList<Subtitle> SearchSubtitles(string filename) {
 			if (string.IsNullOrEmpty(filename)) {
 				throw new ArgumentNullException("filename");
 			}
