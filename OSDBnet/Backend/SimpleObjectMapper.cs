@@ -1,0 +1,26 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Reflection;
+using CookComputing.XmlRpc;
+
+namespace OSDBnet.Backend {
+	public static class SimpleObjectMapper {
+
+		public static T MapToObject<T>(XmlRpcStruct obj) where T : class {
+			T instance = Activator.CreateInstance<T>();
+
+			var destinationType = typeof(T);
+			var members = destinationType.GetFields();
+
+			foreach (var member in members) {
+				if (obj.ContainsKey(member.Name)) {
+					member.SetValue(instance, obj[member.Name]);
+				}
+			}
+
+			return instance;
+		}
+	}
+}

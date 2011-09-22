@@ -23,7 +23,7 @@ namespace OSDBnet.Backend {
 
 	[XmlRpcMissingMapping(MappingAction.Ignore)]
 	public class SearchSubtitlesResponse : ResponseBase {
-		public SearchSubtitlesInfo[] data;
+		public Object data;
 	}
 
 	[XmlRpcMissingMapping(MappingAction.Ignore)]

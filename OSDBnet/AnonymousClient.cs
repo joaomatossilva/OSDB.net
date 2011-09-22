@@ -45,8 +45,13 @@ namespace OSDBnet {
 			VerifyResponseCode(response);
 
 			var subtitles = new List<Subtitle>();
-			foreach (var info in response.data) {
-				subtitles.Add(BuildSubtitleObject(info));
+
+			var subtitlesInfo = response.data as object[];
+			if (null != subtitlesInfo) {
+				foreach (var infoObject in subtitlesInfo) {
+					var subInfo = SimpleObjectMapper.MapToObject<SearchSubtitlesInfo>((CookComputing.XmlRpc.XmlRpcStruct)infoObject);
+					subtitles.Add(BuildSubtitleObject(subInfo));
+				}
 			}
 			return subtitles;
 		}

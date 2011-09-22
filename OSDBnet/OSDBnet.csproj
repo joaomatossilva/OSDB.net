@@ -47,6 +47,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AnonymousClient.cs" />
+    <Compile Include="Backend\SimpleObjectMapper.cs" />
     <Compile Include="HashHelper.cs">
       <SubType>Code</SubType>
     </Compile>
