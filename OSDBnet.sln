@@ -5,6 +5,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OSDBnet", "OSDBnet\OSDBnet.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OSDBnet.SimpleTest", "OSDBnet.SimpleTest\OSDBnet.SimpleTest.csproj", "{FC3FF54E-649D-4ECF-AE3D-B954332EB0DC}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OSDBcmd", "OSDBcmd\OSDBcmd.csproj", "{66A5DFEE-8D92-40E0-8274-3D3365233BF7}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -35,6 +37,16 @@ Global
 		{FC3FF54E-649D-4ECF-AE3D-B954332EB0DC}.Release|Mixed Platforms.Build.0 = Release|x86
 		{FC3FF54E-649D-4ECF-AE3D-B954332EB0DC}.Release|x86.ActiveCfg = Release|x86
 		{FC3FF54E-649D-4ECF-AE3D-B954332EB0DC}.Release|x86.Build.0 = Release|x86
+		{66A5DFEE-8D92-40E0-8274-3D3365233BF7}.Debug|Any CPU.ActiveCfg = Debug|x86
+		{66A5DFEE-8D92-40E0-8274-3D3365233BF7}.Debug|Mixed Platforms.ActiveCfg = Debug|x86
+		{66A5DFEE-8D92-40E0-8274-3D3365233BF7}.Debug|Mixed Platforms.Build.0 = Debug|x86
+		{66A5DFEE-8D92-40E0-8274-3D3365233BF7}.Debug|x86.ActiveCfg = Debug|x86
+		{66A5DFEE-8D92-40E0-8274-3D3365233BF7}.Debug|x86.Build.0 = Debug|x86
+		{66A5DFEE-8D92-40E0-8274-3D3365233BF7}.Release|Any CPU.ActiveCfg = Release|x86
+		{66A5DFEE-8D92-40E0-8274-3D3365233BF7}.Release|Mixed Platforms.ActiveCfg = Release|x86
+		{66A5DFEE-8D92-40E0-8274-3D3365233BF7}.Release|Mixed Platforms.Build.0 = Release|x86
+		{66A5DFEE-8D92-40E0-8274-3D3365233BF7}.Release|x86.ActiveCfg = Release|x86
+		{66A5DFEE-8D92-40E0-8274-3D3365233BF7}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
