@@ -52,6 +52,8 @@ namespace OSDBcmd {
 			}
 			try {
 				DownloadSubtitle(movieName, lucky, languages);
+				Console.WriteLine("Thanks for using this utility.");
+				Console.WriteLine("All subtitles are on OpenSubtitles.org");
 			} catch (Exception ex) {
 				Console.WriteLine("ops.... something went wrong.");
 				Console.WriteLine("{0} : {1}", ex.GetType().Name, ex.Message);
