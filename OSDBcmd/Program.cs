@@ -83,9 +83,45 @@ namespace OSDBcmd {
 			}
 		}
 
-		private static bool PromptForSubtitle(IEnumerable<Subtitle> subtitles, ref Subtitle selectedSubtitle) {
-			//TODO: prompt for subtitles
+		private static bool PromptForSubtitle(IList<Subtitle> subtitles, ref Subtitle selectedSubtitle) {
+			Console.WriteLine("I found multiple subtitles for your movie. Please chose one from the list:");
+			DisplayChoices(subtitles, selectedSubtitle);
+			string input;
+			int choice = 0;
+			bool validOption = false;
+			do {
+				Console.Write("Your choice? (avaible options: '1'-'{0}', 'c', 'l')  [{1}]:", subtitles.Count, subtitles.IndexOf(selectedSubtitle) + 1);
+				input = Console.ReadLine();
+				if (int.TryParse(input, out choice)) {
+					if (choice > 0 || choice <= subtitles.Count) {
+						validOption = true;
+					}
+				}
+				
+				if (!validOption) {
+					if (string.Compare(input, "l", StringComparison.InvariantCultureIgnoreCase) == 0) {
+						DisplayChoices(subtitles, selectedSubtitle);
+					} else if (string.Compare(input, "c", StringComparison.InvariantCultureIgnoreCase) == 0) {
+						return false;
+					} else {
+						Console.WriteLine("Invalid option. Please chose one of the index numbers from the list, 'c' to cancel or 'l' to show the list again.");
+					}
+				}
+			} while (!validOption);
+
+			selectedSubtitle = subtitles[choice - 1];
+
 			return true;
+		}
+
+		private static void DisplayChoices(IList<Subtitle> subtitles, Subtitle defaultSubtitle) {
+			int choice = 1;
+			foreach (var subtitle in subtitles) {
+				Console.WriteLine("{0}[{1}] {2}", subtitle.Equals(defaultSubtitle)? "*": " ", choice++, subtitle.MovieName);
+				Console.WriteLine("\tFile:{0}", subtitle.SubtitleFileName);
+				Console.WriteLine("\tLanguage:{0}", subtitle.LanguageName);
+				Console.WriteLine();
+			}
 		}
 
 		static void ShowError(string message) {
