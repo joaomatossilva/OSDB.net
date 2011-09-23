@@ -63,12 +63,11 @@ namespace OSDBcmd {
 			using (var osdb = Osdb.Login(systemLanguage)) {
 				var subtitles = osdb.SearchSubtitles(movieFileName);
 
-				int subtitlesCount = subtitles.Count();
+				int subtitlesCount = subtitles.Count;
 				if (subtitlesCount == 0) {
 					Console.WriteLine("Sorry, no subtitles found for your movie");
 					return;
 				}
-
 				var selectedSubtitle = subtitles.First();
 				if (!lucky) {
 					var canceled = !PromptForSubtitle(subtitles, ref selectedSubtitle);
