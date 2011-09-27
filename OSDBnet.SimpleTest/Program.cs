@@ -12,8 +12,8 @@ namespace OSDBnet.SimpleTest {
 			Console.WriteLine("hash1: {0}", HashHelper.ToHexadecimal(hash1));
 			var hash2 = HashHelper.ComputeMovieHash(@"D:\Downloads\osdbsamples\dummy.bin");
 			Console.WriteLine("hash2: {0}", HashHelper.ToHexadecimal(hash2));
-			
-			using (var client = Osdb.Login("pt")) {
+
+			using (var client = Osdb.Login("pt", "OS Test User Agent")) {
 				var subtitles = client.SearchSubtitles(@"D:\Downloads\Eureka.S04E11.Liftoff.HDTV.XviD-FQM.avi");
 				var subtitle = subtitles.First();
 				client.DownloadSubtitleToPath(@"D:\Downloads", subtitle);

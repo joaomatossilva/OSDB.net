@@ -11,7 +11,6 @@ namespace OSDBnet {
 	public class AnonymousClient : IAnonymousClient, IDisposable {
 
 		private bool disposed = false;
-		private const string USERAGENT = "OS Test User Agent";
 
 		protected readonly IOsdb proxy;
 		protected string token;
@@ -20,8 +19,8 @@ namespace OSDBnet {
 			this.proxy = proxy;
 		}
 
-		internal void Login(string language) {
-			LoginResponse response = proxy.Login(string.Empty, string.Empty, language, USERAGENT);
+		internal void Login(string language, string userAgent) {
+			LoginResponse response = proxy.Login(string.Empty, string.Empty, language, userAgent);
 			VerifyResponseCode(response);
 			token = response.token;
 		}

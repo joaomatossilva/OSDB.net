@@ -23,9 +23,9 @@ namespace OSDBnet {
 			return response;
 		}
 
-		public static IAnonymousClient Login(string language) {
+		public static IAnonymousClient Login(string language, string userAgent) {
 			var client = new AnonymousClient(Proxy);
-			client.Login(language);
+			client.Login(language, userAgent);
 			return client;
 		}
 	}
