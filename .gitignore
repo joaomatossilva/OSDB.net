@@ -3,3 +3,8 @@ obj
 *.suo
 *.user
 packages
+
+*.nupkg
+
+OSDBnet.SimpleTest
+OSDBnet_debug.sln
