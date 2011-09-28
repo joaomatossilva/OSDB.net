@@ -139,6 +139,22 @@ namespace OSDBnet {
 			return movieInfoList;
 		}
 
+		public IEnumerable<Language> GetSubLanguages() {
+			//get system language
+			return GetSubLanguages("en");
+		}
+
+		public IEnumerable<Language> GetSubLanguages(string language) {
+			var response = proxy.GetSubLanguages(language);
+			VerifyResponseCode(response);
+
+			IList<Language> languages = new List<Language>();
+			foreach (var languageInfo in response.data) {
+				languages.Add(BuildLanguageObject(languageInfo));
+			}
+			return languages;
+		}
+
 		public void  Dispose()
 		{
 			Dispose(true);
@@ -211,12 +227,22 @@ namespace OSDBnet {
 			return movieInfo;
 		}
 
+		protected static Language BuildLanguageObject(GetSubLanguagesInfo info) {
+			var language = new Language {
+				LanguageName = info.LanguageName,
+				SubLanguageID = info.SubLanguageID,
+				ISO639 = info.ISO639
+			};
+			return language;
+		}
+
 		protected static void VerifyResponseCode(ResponseBase response) {
 			if (null == response) {
 				throw new ArgumentNullException("response");
 			}
 			if (string.IsNullOrEmpty(response.status)) {
-				throw new ArgumentException("parameter response.status cannot be null", "response");
+				//aperantly there are some methods that dont define 'status'
+				return;
 			}
 
 			int responseCode = int.Parse(response.status.Substring(0,3));

@@ -86,6 +86,18 @@ namespace OSDBnet.Backend {
 		public string MovieName;
 	}
 
+	[XmlRpcMissingMapping(MappingAction.Ignore)]
+	public class GetSubLanguagesResponse : ResponseBase {
+		public GetSubLanguagesInfo[] data;
+	}
+
+	[XmlRpcMissingMapping(MappingAction.Ignore)]
+	public class GetSubLanguagesInfo {
+		public string SubLanguageID;
+		public string LanguageName;
+		public string ISO639;
+	}
+
 	public struct ServerInfo {
 		public string subs_downloads;
 		public string movies_aka;

@@ -25,5 +25,9 @@ namespace OSDBnet.Backend {
 
 		[XmlRpcMethod("CheckMovieHash2")]
 		CheckMovieHashResponse CheckMovieHash(string token, string[] moviehash);
+
+		[XmlRpcMethod("GetSubLanguages")]
+		GetSubLanguagesResponse GetSubLanguages(string language);
+		 
 	}
 }
