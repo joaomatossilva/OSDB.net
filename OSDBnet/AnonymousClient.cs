@@ -25,7 +25,7 @@ namespace OSDBnet {
 			token = response.token;
 		}
 
-		public IList<Subtitle> SearchSubtitles(string filename) {
+		public IList<Subtitle> SearchSubtitlesFromFile(string languages, string filename) {
 			if (string.IsNullOrEmpty(filename)) {
 				throw new ArgumentNullException("filename");
 			}
@@ -33,13 +33,39 @@ namespace OSDBnet {
 			if (!file.Exists) {
 				throw new ArgumentException("File doesn't exist", "filename");
 			}
-			var request = new SearchSubtitlesRequest { sublanguageid = "por,pob" };
+			var request = new SearchSubtitlesRequest { sublanguageid = languages };
 			request.moviehash = HashHelper.ToHexadecimal(HashHelper.ComputeMovieHash(filename));
 			request.moviebytesize = file.Length.ToString();
 
 			request.imdbid = string.Empty;
 			request.query = string.Empty;
 
+			return SearchSubtitlesInternal(request);
+		}
+
+		public IList<Subtitle> SearchSubtitlesFromImdb(string languages, string imdbId) {
+			if (string.IsNullOrEmpty(imdbId)) {
+				throw new ArgumentNullException("imdbId");
+			}			
+			var request = new SearchSubtitlesRequest {
+				sublanguageid = languages, 
+				imdbid = imdbId 
+			};
+			return SearchSubtitlesInternal(request);
+		}
+
+		public IList<Subtitle> SearchSubtitlesFromQuery(string languages, string query) {
+			if (string.IsNullOrEmpty(query)) {
+				throw new ArgumentNullException("query");
+			}
+			var request = new SearchSubtitlesRequest {
+				sublanguageid = languages,
+				query = query
+			};
+			return SearchSubtitlesInternal(request);
+		}
+
+		private IList<Subtitle> SearchSubtitlesInternal(SearchSubtitlesRequest request) {
 			var response = proxy.SearchSubtitles(token, new SearchSubtitlesRequest[] { request });
 			VerifyResponseCode(response);
 
