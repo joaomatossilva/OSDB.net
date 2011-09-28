@@ -67,6 +67,11 @@ namespace OSDBnet.Backend {
 		public string SubtitlesLink;
 	}
 
+	[XmlRpcMissingMapping(MappingAction.Ignore)]
+	public class CheckSubHashResponse : ResponseBase {
+		public Object data;
+	}
+
 	public struct ServerInfo {
 		public string subs_downloads;
 		public string movies_aka;

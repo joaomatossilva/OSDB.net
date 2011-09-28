@@ -9,5 +9,6 @@ namespace OSDBnet {
 		IList<Subtitle> SearchSubtitlesFromImdb(string languages, string imdbId);
 		IList<Subtitle> SearchSubtitlesFromQuery(string languages, string query);
 		string DownloadSubtitleToPath(string path, Subtitle subtitle);
+		long CheckSubHash(string subHash);
 	}
 }

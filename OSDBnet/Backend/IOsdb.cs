@@ -20,5 +20,7 @@ namespace OSDBnet.Backend {
 		[XmlRpcMethod("SearchSubtitles")]
 		SearchSubtitlesResponse SearchSubtitles(string token, SearchSubtitlesRequest[] request);
 
+		[XmlRpcMethod("CheckSubHash")]
+		CheckSubHashResponse CheckSubHash(string token, string[] subhashes);
 	}
 }

@@ -6,6 +6,7 @@ using System.IO;
 using System.Net;
 using OSDBnet.Backend;
 using ICSharpCode.SharpZipLib.GZip;
+using CookComputing.XmlRpc;
 
 namespace OSDBnet {
 	public class AnonymousClient : IAnonymousClient, IDisposable {
@@ -74,7 +75,7 @@ namespace OSDBnet {
 			var subtitlesInfo = response.data as object[];
 			if (null != subtitlesInfo) {
 				foreach (var infoObject in subtitlesInfo) {
-					var subInfo = SimpleObjectMapper.MapToObject<SearchSubtitlesInfo>((CookComputing.XmlRpc.XmlRpcStruct)infoObject);
+					var subInfo = SimpleObjectMapper.MapToObject<SearchSubtitlesInfo>((XmlRpcStruct)infoObject);
 					subtitles.Add(BuildSubtitleObject(subInfo));
 				}
 			}
@@ -105,6 +106,19 @@ namespace OSDBnet {
 			}
 
 			return destinationfile;
+		}
+
+		public long CheckSubHash(string subHash) {
+			var response = proxy.CheckSubHash(token, new string[] { subHash });
+			VerifyResponseCode(response);
+
+			long idSubtitleFile = 0;
+			var hashInfo = response.data as XmlRpcStruct;
+			if (null != hashInfo && hashInfo.ContainsKey(subHash)) {
+				idSubtitleFile = Convert.ToInt64(hashInfo[subHash]);
+			}
+
+			return idSubtitleFile;
 		}
 
 		public void  Dispose()
