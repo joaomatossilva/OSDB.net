@@ -10,5 +10,6 @@ namespace OSDBnet {
 		IList<Subtitle> SearchSubtitlesFromQuery(string languages, string query);
 		string DownloadSubtitleToPath(string path, Subtitle subtitle);
 		long CheckSubHash(string subHash);
+		IEnumerable<MovieInfo> CheckMovieHash(string moviehash);
 	}
 }

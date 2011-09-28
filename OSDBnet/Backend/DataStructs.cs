@@ -72,6 +72,20 @@ namespace OSDBnet.Backend {
 		public Object data;
 	}
 
+	[XmlRpcMissingMapping(MappingAction.Ignore)]
+	public class CheckMovieHashResponse : ResponseBase {
+		public Object data;
+	}
+
+	[XmlRpcMissingMapping(MappingAction.Ignore)]
+	public class CheckMovieHashInfo {
+		public string MovieHash;
+		public string MovieImdbID;
+		public string SeenCount;
+		public string MovieYear;
+		public string MovieName;
+	}
+
 	public struct ServerInfo {
 		public string subs_downloads;
 		public string movies_aka;

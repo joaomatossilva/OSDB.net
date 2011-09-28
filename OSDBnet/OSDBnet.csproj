@@ -51,6 +51,7 @@
     <Compile Include="HashHelper.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="MovieInfo.cs" />
     <Compile Include="Osdb.cs" />
     <Compile Include="Backend\DataStructs.cs" />
     <Compile Include="IAnonymousClient.cs" />

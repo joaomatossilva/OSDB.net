@@ -121,6 +121,24 @@ namespace OSDBnet {
 			return idSubtitleFile;
 		}
 
+		public IEnumerable<MovieInfo> CheckMovieHash(string moviehash) {
+			var response = proxy.CheckMovieHash(token, new string[] { moviehash });
+			VerifyResponseCode(response);
+
+			var movieInfoList = new List<MovieInfo>();
+
+			var hashInfo = response.data as XmlRpcStruct;
+			if (null != hashInfo && hashInfo.ContainsKey(moviehash)) {
+				var movieInfoArray = hashInfo[moviehash] as object[];
+				foreach (XmlRpcStruct movieInfoStruct in movieInfoArray) {
+					var movieInfo = SimpleObjectMapper.MapToObject<CheckMovieHashInfo>(movieInfoStruct);
+					movieInfoList.Add(BuildMovieInfoObject(movieInfo));
+				}
+			}
+
+			return movieInfoList;
+		}
+
 		public void  Dispose()
 		{
 			Dispose(true);
@@ -180,6 +198,17 @@ namespace OSDBnet {
 				MovieYear = int.Parse(info.MovieYear)
 			};
 			return sub;
+		}
+
+		protected static MovieInfo BuildMovieInfoObject(CheckMovieHashInfo info) {
+			var movieInfo = new MovieInfo {
+				MovieHash = info.MovieHash,
+				MovieImdbID = info.MovieImdbID,
+				MovieYear = info.MovieYear,
+				MovieName = info.MovieName,
+				SeenCount = info.SeenCount
+			};
+			return movieInfo;
 		}
 
 		protected static void VerifyResponseCode(ResponseBase response) {

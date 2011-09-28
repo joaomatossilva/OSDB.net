@@ -22,5 +22,8 @@ namespace OSDBnet.Backend {
 
 		[XmlRpcMethod("CheckSubHash")]
 		CheckSubHashResponse CheckSubHash(string token, string[] subhashes);
+
+		[XmlRpcMethod("CheckMovieHash2")]
+		CheckMovieHashResponse CheckMovieHash(string token, string[] moviehash);
 	}
 }
