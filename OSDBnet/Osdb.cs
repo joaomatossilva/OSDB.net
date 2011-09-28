@@ -23,10 +23,20 @@ namespace OSDBnet {
 			return response;
 		}
 
+		public static IAnonymousClient Login(string userAgent) {
+			var systemLanguage = GetSystemLanguage();
+			return Login(systemLanguage, userAgent);
+		}
+
 		public static IAnonymousClient Login(string language, string userAgent) {
 			var client = new AnonymousClient(Proxy);
 			client.Login(language, userAgent);
 			return client;
+		}
+
+		private static string GetSystemLanguage() {
+			var currentCulture = System.Globalization.CultureInfo.CurrentUICulture;
+			return currentCulture.TwoLetterISOLanguageName.ToLower();
 		}
 	}
 }
