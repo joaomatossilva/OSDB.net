@@ -13,5 +13,6 @@ namespace OSDBnet {
 		IEnumerable<MovieInfo> CheckMovieHash(string moviehash);
 		IEnumerable<Language> GetSubLanguages(); 
 		IEnumerable<Language> GetSubLanguages(string language);
+		IEnumerable<Movie> SearchMoviesOnImdb(string query);
 	}
 }

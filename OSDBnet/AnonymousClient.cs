@@ -155,6 +155,23 @@ namespace OSDBnet {
 			return languages;
 		}
 
+		public IEnumerable<Movie> SearchMoviesOnImdb(string query) {
+			var response = proxy.SearchMoviesOnIMDB(token, query);
+			VerifyResponseCode(response);
+
+			IList<Movie> movies = new List<Movie>();
+
+			if (response.data.Length == 1 && string.IsNullOrEmpty(response.data.First().id)) {
+				// no match found
+				return movies;
+			}
+
+			foreach (var movieInfo in response.data) {
+				movies.Add(BuildMovieObject(movieInfo));
+			}
+			return movies;
+		}
+
 		public void  Dispose()
 		{
 			Dispose(true);
@@ -234,6 +251,14 @@ namespace OSDBnet {
 				ISO639 = info.ISO639
 			};
 			return language;
+		}
+
+		protected static Movie BuildMovieObject(MoviesOnIMDBInfo info) {
+			var movie = new Movie {
+				Id = Convert.ToInt64(info.id),
+				Title = info.title
+			};
+			return movie;
 		}
 
 		protected static void VerifyResponseCode(ResponseBase response) {

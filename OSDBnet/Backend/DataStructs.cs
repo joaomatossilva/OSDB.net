@@ -98,6 +98,17 @@ namespace OSDBnet.Backend {
 		public string ISO639;
 	}
 
+	[XmlRpcMissingMapping(MappingAction.Ignore)]
+	public class SearchMoviesOnIMDBResponse : ResponseBase {
+		public MoviesOnIMDBInfo[] data;
+	}
+
+	[XmlRpcMissingMapping(MappingAction.Ignore)]
+	public class MoviesOnIMDBInfo {
+		public string id;
+		public string title;
+	}
+
 	public struct ServerInfo {
 		public string subs_downloads;
 		public string movies_aka;

@@ -28,6 +28,9 @@ namespace OSDBnet.Backend {
 
 		[XmlRpcMethod("GetSubLanguages")]
 		GetSubLanguagesResponse GetSubLanguages(string language);
+
+		[XmlRpcMethod("SearchMoviesOnIMDB")]
+		SearchMoviesOnIMDBResponse SearchMoviesOnIMDB(string token, string query);
 		 
 	}
 }

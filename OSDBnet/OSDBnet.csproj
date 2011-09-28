@@ -52,6 +52,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Language.cs" />
+    <Compile Include="Movie.cs" />
     <Compile Include="MovieInfo.cs" />
     <Compile Include="Osdb.cs" />
     <Compile Include="Backend\DataStructs.cs" />
