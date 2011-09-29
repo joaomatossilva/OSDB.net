@@ -109,6 +109,36 @@ namespace OSDBnet.Backend {
 		public string title;
 	}
 
+	[XmlRpcMissingMapping(MappingAction.Ignore)]
+	public class GetIMDBMovieDetailsResponse : ResponseBase {
+		public IMDBMovieDetails data;
+	}
+
+	[XmlRpcMissingMapping(MappingAction.Ignore)]
+	public class IMDBMovieDetails {
+		public object cast;
+		public object writers;
+		public string trivia;
+		public string[] genres;
+		public string[] country;
+		public string[] language;
+		public object directors;
+		public string duration;
+		public string tagline;
+		public string rating;
+		public string cover;
+		public string id;
+		public string votes;
+		public string title;
+		public string[] aka;
+		public string year;
+	}
+
+	public class ImdbPerson {
+		public string id;
+		public string name;
+	}
+
 	public struct ServerInfo {
 		public string subs_downloads;
 		public string movies_aka;

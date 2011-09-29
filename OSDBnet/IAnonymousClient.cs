@@ -14,5 +14,6 @@ namespace OSDBnet {
 		IEnumerable<Language> GetSubLanguages(); 
 		IEnumerable<Language> GetSubLanguages(string language);
 		IEnumerable<Movie> SearchMoviesOnImdb(string query);
+		MovieDetails GetImdbMovieDetails(string imdbId);
 	}
 }

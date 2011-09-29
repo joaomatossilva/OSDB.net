@@ -31,6 +31,8 @@ namespace OSDBnet.Backend {
 
 		[XmlRpcMethod("SearchMoviesOnIMDB")]
 		SearchMoviesOnIMDBResponse SearchMoviesOnIMDB(string token, string query);
-		 
+
+		[XmlRpcMethod("GetIMDBMovieDetails")]
+		GetIMDBMovieDetailsResponse GetIMDBMovieDetails(string token, string imdbId);
 	}
 }

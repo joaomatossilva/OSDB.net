@@ -172,6 +172,14 @@ namespace OSDBnet {
 			return movies;
 		}
 
+		public MovieDetails GetImdbMovieDetails(string imdbId) {
+			var response = proxy.GetIMDBMovieDetails(token, imdbId);
+			VerifyResponseCode(response);
+
+			var movieDetails = BuildMovieDetailsObject(response.data);
+			return movieDetails;
+		}
+
 		public void  Dispose()
 		{
 			Dispose(true);
@@ -257,6 +265,28 @@ namespace OSDBnet {
 			var movie = new Movie {
 				Id = Convert.ToInt64(info.id),
 				Title = info.title
+			};
+			return movie;
+		}
+
+		protected static MovieDetails BuildMovieDetailsObject(IMDBMovieDetails info) {
+			var movie = new MovieDetails {
+				Aka = info.aka,
+				Cast = SimpleObjectMapper.MapToDictionary(info.cast as XmlRpcStruct),
+				Cover = info.cover,
+				Id = info.id,
+				Rating = info.rating,
+				Title = info.title,
+				Votes = info.votes,
+				Year = info.year,
+				Country = info.country,
+				Directors = SimpleObjectMapper.MapToDictionary(info.directors as XmlRpcStruct),
+				Duration = info.duration,
+				Genres = info.genres,
+				Language = info.language,
+				Tagline = info.tagline,
+				Trivia = info.trivia,
+				Writers = SimpleObjectMapper.MapToDictionary(info.writers as XmlRpcStruct)
 			};
 			return movie;
 		}
