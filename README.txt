@@ -48,6 +48,10 @@ CheckMovieHash
 GetSubLanguages 
 SearchMoviesOnIMDB
 GetIMDBMovieDetails
+NoOperation
+GetComments
+DetectLanguage (seems buggy)
+ReportWrongMovieHash
 
 - Half Supported Methods:
 LogIn ( missing user, only anonymous supported )
@@ -57,15 +61,11 @@ SearchToMail
 InsertMovieHash
 TryUploadSubtitles
 UploadSubtitles
-DetectLanguage
 DownloadSubtitles ( download is done directly by http)
-ReportWrongMovieHash
 InsertMovie
 SubtitlesVote
-GetComments
 AddComment
 AddRequest
-NoOperation
 
 - Will not be implemented (this method are program specific 'subdownloader' or 'oscar'):
 GetAvailableTranslations
@@ -100,16 +100,16 @@ tentative release date: 2011-10-30
 
 This version should include logged users only available methods
 
-----
-v0.3
-tentative release date: 2011-10-16
-
-This version should have better coverage of the OSDB protocol still on anonymous
-public methods
-
 
 5. Version History
 -----------------------
+
+v0.3 - 2011-10-04
+Increased OSDB coverage on methods:
+-NoOperation
+-GetComments
+-DetectLanguage (seems buggy)
+-ReportWrongMovieHash
 
 v0.2 - 2011-09-29
 Increased OSDB coverage on methods:
