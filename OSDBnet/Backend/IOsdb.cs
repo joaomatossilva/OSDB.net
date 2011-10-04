@@ -40,5 +40,8 @@ namespace OSDBnet.Backend {
 
 		[XmlRpcMethod("GetComments")]
 		GetCommentsResponse GetComments(string token, string[] idsubtitle);
+
+		[XmlRpcMethod("DetectLanguage")]
+		DetectLanguageResponse DetectLanguage(string token, string[] text);
 	}
 }

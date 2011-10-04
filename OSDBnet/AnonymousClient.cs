@@ -207,6 +207,23 @@ namespace OSDBnet {
 			return comments;
 		}
 
+		public string DetectLanguge(string data) {
+			var bytes = GzipString(data);
+			var text = Convert.ToBase64String(bytes);
+
+			var response = proxy.DetectLanguage(token, new string[] { text } );
+			VerifyResponseCode(response);
+
+			var languagesStruct = response.data as XmlRpcStruct;
+			if (languagesStruct == null)
+				return null;
+
+			foreach(string key in languagesStruct.Keys){
+				return languagesStruct[key].ToString();
+			}
+			return null;
+		}
+
 		public void  Dispose()
 		{
 			Dispose(true);
@@ -229,6 +246,36 @@ namespace OSDBnet {
 
 		~AnonymousClient() {
 			Dispose(false);
+		}
+
+		protected static string Base64Encode(string str) {
+			byte[] encbuff = System.Text.Encoding.UTF8.GetBytes(str);
+			return Convert.ToBase64String(encbuff);
+		}
+		protected static string Base64Decode(string str) {
+			byte[] decbuff = Convert.FromBase64String(str);
+			return System.Text.Encoding.UTF8.GetString(decbuff);
+		}
+
+		protected static byte[] GzipString(string str) {
+			using (MemoryStream outputMemory = new MemoryStream()) {
+				using (MemoryStream memoryStream = new MemoryStream(System.Text.Encoding.UTF8.GetBytes(str)))
+				using (GZipOutputStream outputStream = new GZipOutputStream(outputMemory)) {
+					memoryStream.CopyTo(outputStream);
+				}
+				return outputMemory.ToArray();
+			}
+		}
+
+		protected static string GUnzipString(byte[] gzippedString) {
+			using (MemoryStream inputMemory = new MemoryStream()) {
+				using (MemoryStream memoryStream = new MemoryStream(gzippedString))
+				using (GZipInputStream inputStream = new GZipInputStream(inputMemory)) {
+					inputStream.CopyTo(memoryStream);
+				}
+				var data = inputMemory.ToArray();
+				return System.Text.Encoding.UTF8.GetString(data);
+			}
 		}
 
 		protected static void UnZipSubtitleFileToFile(string zipFileName, string subFileName) {

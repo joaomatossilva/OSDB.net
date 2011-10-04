@@ -18,5 +18,6 @@ namespace OSDBnet {
 		//Should this be exposed?
 		void NoOperation();
 		IEnumerable<UserComment> GetComments(string idSubtitle);
+		string DetectLanguge(string data);
 	}
 }

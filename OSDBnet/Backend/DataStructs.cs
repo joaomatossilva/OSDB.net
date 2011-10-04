@@ -152,6 +152,11 @@ namespace OSDBnet.Backend {
 		public string Created;
 	}
 
+	[XmlRpcMissingMapping(MappingAction.Ignore)]
+	public class DetectLanguageResponse : ResponseBase {
+		public object data;
+	}
+
 	public struct ServerInfo {
 		public string subs_downloads;
 		public string movies_aka;
