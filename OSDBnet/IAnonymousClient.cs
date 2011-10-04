@@ -17,5 +17,6 @@ namespace OSDBnet {
 		MovieDetails GetImdbMovieDetails(string imdbId);
 		//Should this be exposed?
 		void NoOperation();
+		IEnumerable<UserComment> GetComments(string idSubtitle);
 	}
 }

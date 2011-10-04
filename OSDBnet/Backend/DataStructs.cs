@@ -139,6 +139,19 @@ namespace OSDBnet.Backend {
 		public string name;
 	}
 
+	[XmlRpcMissingMapping(MappingAction.Ignore)]
+	public class GetCommentsResponse : ResponseBase {
+		public object data;
+	}
+
+	public class CommentsData {
+		public string IDSubtitle;
+		public string UserID;
+		public string UserNickName;
+		public string Comment;
+		public string Created;
+	}
+
 	public struct ServerInfo {
 		public string subs_downloads;
 		public string movies_aka;

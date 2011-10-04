@@ -37,5 +37,8 @@ namespace OSDBnet.Backend {
 
 		[XmlRpcMethod("NoOperation")]
 		ResponseBase NoOperation(string token);
+
+		[XmlRpcMethod("GetComments")]
+		GetCommentsResponse GetComments(string token, string[] idsubtitle);
 	}
 }

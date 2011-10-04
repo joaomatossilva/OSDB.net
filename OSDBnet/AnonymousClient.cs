@@ -185,6 +185,28 @@ namespace OSDBnet {
 			VerifyResponseCode(response);
 		}
 
+		public IEnumerable<UserComment> GetComments(string idsubtitle) {
+			var response = proxy.GetComments(token, new string[] { idsubtitle });
+			VerifyResponseCode(response);
+
+			var comments = new List<UserComment>();
+			var commentsStruct = response.data as XmlRpcStruct;
+			if (commentsStruct == null)
+				return comments;
+
+			if (commentsStruct.ContainsKey("_" + idsubtitle)) {
+				object[] commentsList = commentsStruct["_" + idsubtitle] as object[];
+				if (commentsList != null) {
+					foreach (XmlRpcStruct commentStruct in commentsList) {
+						var comment = SimpleObjectMapper.MapToObject<CommentsData>(commentStruct);
+						comments.Add(BuildUserCommentObject(comment));
+					}
+				}
+			}
+
+			return comments;
+		}
+
 		public void  Dispose()
 		{
 			Dispose(true);
@@ -294,6 +316,17 @@ namespace OSDBnet {
 				Writers = SimpleObjectMapper.MapToDictionary(info.writers as XmlRpcStruct)
 			};
 			return movie;
+		}
+
+		protected static UserComment BuildUserCommentObject(CommentsData info){
+			var comment = new UserComment {
+				Comment = info.Comment,
+				Created = info.Created,
+				IDSubtitle = info.IDSubtitle,
+				UserID = info.UserID,
+				UserNickName = info.UserNickName
+			};
+			return comment;
 		}
 
 		protected static void VerifyResponseCode(ResponseBase response) {
