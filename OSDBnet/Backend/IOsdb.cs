@@ -43,5 +43,8 @@ namespace OSDBnet.Backend {
 
 		[XmlRpcMethod("DetectLanguage")]
 		DetectLanguageResponse DetectLanguage(string token, string[] text);
+
+		[XmlRpcMethod("ReportWrongMovieHash")]
+		ResponseBase ReportWrongMovieHash(string token, string IDSubMovieFile);
 	}
 }

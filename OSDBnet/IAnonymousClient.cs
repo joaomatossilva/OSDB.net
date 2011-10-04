@@ -19,5 +19,6 @@ namespace OSDBnet {
 		void NoOperation();
 		IEnumerable<UserComment> GetComments(string idSubtitle);
 		string DetectLanguge(string data);
+		void ReportWrongMovieHash(string idSubMovieFile);
 	}
 }

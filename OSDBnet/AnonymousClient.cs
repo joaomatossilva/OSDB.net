@@ -224,6 +224,11 @@ namespace OSDBnet {
 			return null;
 		}
 
+		public void ReportWrongMovieHash(string idSubMovieFile) {
+			var response = proxy.ReportWrongMovieHash(token, idSubMovieFile);
+			VerifyResponseCode(response);
+		}
+
 		public void  Dispose()
 		{
 			Dispose(true);
