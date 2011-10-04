@@ -180,6 +180,11 @@ namespace OSDBnet {
 			return movieDetails;
 		}
 
+		public void NoOperation() {
+			var response = proxy.NoOperation(token);
+			VerifyResponseCode(response);
+		}
+
 		public void  Dispose()
 		{
 			Dispose(true);
