@@ -302,7 +302,7 @@ namespace OSDBnet {
 		}
 
 		protected static Subtitle BuildSubtitleObject(SearchSubtitlesInfo info) {
-			var sub = new Subtitle {
+            var sub = new Subtitle {
 				SubtitleId = info.IDSubtitle,
 				SubtitleHash = info.SubHash,
 				SubtitleFileName = info.SubFileName,
@@ -310,6 +310,7 @@ namespace OSDBnet {
 				SubtitlePageLink = new Uri(info.SubtitlesLink),
 				LanguageId = info.SubLanguageID,
 				LanguageName = info.LanguageName,
+                Rating = info.SubRating,
 
 				ImdbId = info.IDMovieImdb,
 				MovieId = info.IDMovie,
