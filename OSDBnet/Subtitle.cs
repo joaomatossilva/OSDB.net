@@ -19,6 +19,9 @@ namespace OSDBnet {
 		public string LanguageId { get; set; }
 		public string LanguageName { get; set; }
 
+		public string Rating { get; set; }
+		public string Bad { get; set; }
+
 		public Uri SubTitleDownloadLink { get; set; }
 		public Uri SubtitlePageLink { get; set; }
 	}

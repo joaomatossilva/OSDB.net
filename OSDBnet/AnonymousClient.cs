@@ -310,6 +310,8 @@ namespace OSDBnet {
 				SubtitlePageLink = new Uri(info.SubtitlesLink),
 				LanguageId = info.SubLanguageID,
 				LanguageName = info.LanguageName,
+				Rating = info.SubRating,
+				Bad = info.SubBad,
 
 				ImdbId = info.IDMovieImdb,
 				MovieId = info.IDMovie,
