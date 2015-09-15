@@ -1,6 +1,8 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2012
+# Visual Studio 14
+VisualStudioVersion = 14.0.23107.0
+MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OSDBnet", "OSDBnet\OSDBnet.csproj", "{49C78F88-912B-49A2-935D-B9AEBE07011A}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OSDBcmd", "OSDBcmd\OSDBcmd.csproj", "{66A5DFEE-8D92-40E0-8274-3D3365233BF7}"
@@ -11,6 +13,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{786351
 		.nuget\NuGet.exe = .nuget\NuGet.exe
 		.nuget\NuGet.targets = .nuget\NuGet.targets
 	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OSDBnet.Tests", "OSDBnet.Tests\OSDBnet.Tests.csproj", "{CDE17B68-1BA7-4A51-93BE-447E0A454F34}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -42,6 +46,18 @@ Global
 		{66A5DFEE-8D92-40E0-8274-3D3365233BF7}.Release|Mixed Platforms.Build.0 = Release|x86
 		{66A5DFEE-8D92-40E0-8274-3D3365233BF7}.Release|x86.ActiveCfg = Release|x86
 		{66A5DFEE-8D92-40E0-8274-3D3365233BF7}.Release|x86.Build.0 = Release|x86
+		{CDE17B68-1BA7-4A51-93BE-447E0A454F34}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CDE17B68-1BA7-4A51-93BE-447E0A454F34}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CDE17B68-1BA7-4A51-93BE-447E0A454F34}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{CDE17B68-1BA7-4A51-93BE-447E0A454F34}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{CDE17B68-1BA7-4A51-93BE-447E0A454F34}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{CDE17B68-1BA7-4A51-93BE-447E0A454F34}.Debug|x86.Build.0 = Debug|Any CPU
+		{CDE17B68-1BA7-4A51-93BE-447E0A454F34}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CDE17B68-1BA7-4A51-93BE-447E0A454F34}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CDE17B68-1BA7-4A51-93BE-447E0A454F34}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{CDE17B68-1BA7-4A51-93BE-447E0A454F34}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{CDE17B68-1BA7-4A51-93BE-447E0A454F34}.Release|x86.ActiveCfg = Release|Any CPU
+		{CDE17B68-1BA7-4A51-93BE-447E0A454F34}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

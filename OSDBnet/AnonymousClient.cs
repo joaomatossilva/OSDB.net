@@ -55,13 +55,15 @@ namespace OSDBnet {
 			return SearchSubtitlesInternal(request);
 		}
 
-		public IList<Subtitle> SearchSubtitlesFromQuery(string languages, string query) {
+		public IList<Subtitle> SearchSubtitlesFromQuery(string languages, string query, int? season = null, int? episode = null) {
 			if (string.IsNullOrEmpty(query)) {
 				throw new ArgumentNullException("query");
 			}
 			var request = new SearchSubtitlesRequest {
 				sublanguageid = languages,
-				query = query
+				query = query,
+                season = season,
+                episode = episode
 			};
 			return SearchSubtitlesInternal(request);
 		}

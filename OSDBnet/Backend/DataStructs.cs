@@ -19,6 +19,10 @@ namespace OSDBnet.Backend {
         public string moviebytesize = string.Empty;
         public string imdbid = string.Empty;
         public string query = string.Empty;
+        [XmlRpcMissingMapping(MappingAction.Ignore)]
+        public int? season = null;
+        [XmlRpcMissingMapping(MappingAction.Ignore)]
+        public int? episode = null;
     }
 
     [XmlRpcMissingMapping(MappingAction.Ignore)]

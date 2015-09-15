@@ -7,7 +7,7 @@ namespace OSDBnet {
 	public interface IAnonymousClient : IDisposable {
 		IList<Subtitle> SearchSubtitlesFromFile(string languages, string filename);
 		IList<Subtitle> SearchSubtitlesFromImdb(string languages, string imdbId);
-		IList<Subtitle> SearchSubtitlesFromQuery(string languages, string query);
+		IList<Subtitle> SearchSubtitlesFromQuery(string languages, string query, int? season = null, int? episode = null);
 		string DownloadSubtitleToPath(string path, Subtitle subtitle);
 		long CheckSubHash(string subHash);
 		IEnumerable<MovieInfo> CheckMovieHash(string moviehash);
