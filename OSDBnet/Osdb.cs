@@ -34,7 +34,14 @@ namespace OSDBnet {
 			return client;
 		}
 
-		private static string GetSystemLanguage() {
+        public static IAnonymousClient Login(string username, string password, string language, string userAgent)
+        {
+            var client = new AnonymousClient(Proxy);
+            client.Login2(username, password, language, userAgent);
+            return client;
+        }
+
+        private static string GetSystemLanguage() {
 			var currentCulture = System.Globalization.CultureInfo.CurrentUICulture;
 			return currentCulture.TwoLetterISOLanguageName.ToLower();
 		}
