@@ -21,18 +21,11 @@ namespace OSDBnet {
 			this.proxy = proxy;
 		}
 
-		internal void Login(string language, string userAgent) {
-			LoginResponse response = proxy.Login(string.Empty, string.Empty, language, userAgent);
+		internal void Login(string username, string password, string language, string userAgent) {
+			LoginResponse response = proxy.Login(username, password, language, userAgent);
 			VerifyResponseCode(response);
 			token = response.token;
 		}
-
-        internal void Login2(string username, string password, string language, string userAgent)
-        {
-            LoginResponse response = proxy.Login(username, password, language, userAgent);
-            VerifyResponseCode(response);
-            token = response.token;
-        }
 
         public IList<Subtitle> SearchSubtitlesFromFile(string languages, string filename) {
 			if (string.IsNullOrEmpty(filename)) {

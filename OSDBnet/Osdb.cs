@@ -30,14 +30,14 @@ namespace OSDBnet {
 
 		public static IAnonymousClient Login(string language, string userAgent) {
 			var client = new AnonymousClient(Proxy);
-			client.Login(language, userAgent);
+			client.Login(string.Empty, string.Empty, language, userAgent);
 			return client;
 		}
 
         public static IAnonymousClient Login(string username, string password, string language, string userAgent)
         {
             var client = new AnonymousClient(Proxy);
-            client.Login2(username, password, language, userAgent);
+            client.Login(username, password, language, userAgent);
             return client;
         }
 
