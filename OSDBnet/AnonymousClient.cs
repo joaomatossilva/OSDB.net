@@ -6,7 +6,6 @@ using System.IO;
 using System.IO.Compression;
 using System.Net;
 using OSDBnet.Backend;
-using ICSharpCode.SharpZipLib.GZip;
 using CookComputing.XmlRpc;
 
 namespace OSDBnet {
@@ -271,25 +270,32 @@ namespace OSDBnet {
 		}
 
 		protected static byte[] GzipString(string str) {
-			using (MemoryStream outputMemory = new MemoryStream()) {
-				using (MemoryStream memoryStream = new MemoryStream(System.Text.Encoding.UTF8.GetBytes(str)))
-				using (GZipOutputStream outputStream = new GZipOutputStream(outputMemory)) {
-					memoryStream.CopyTo(outputStream);
-				}
-				return outputMemory.ToArray();
-			}
-		}
+            var bytes = Encoding.UTF8.GetBytes(str);
+
+            using (var msi = new MemoryStream(bytes))
+            using (var mso = new MemoryStream())
+            {
+                using (var gs = new GZipStream(mso, CompressionMode.Compress))
+                {
+                    msi.CopyTo(gs);
+                }
+
+                return mso.ToArray();
+            }
+        }
 
 		protected static string GUnzipString(byte[] gzippedString) {
-			using (MemoryStream inputMemory = new MemoryStream()) {
-				using (MemoryStream memoryStream = new MemoryStream(gzippedString))
-				using (GZipInputStream inputStream = new GZipInputStream(inputMemory)) {
-					inputStream.CopyTo(memoryStream);
-				}
-				var data = inputMemory.ToArray();
-				return System.Text.Encoding.UTF8.GetString(data);
-			}
-		}
+            using (var msi = new MemoryStream(gzippedString))
+            using (var mso = new MemoryStream())
+            {
+                using (var gs = new GZipStream(msi, CompressionMode.Decompress))
+                {
+                    gs.CopyTo(mso);
+                }
+
+                return Encoding.UTF8.GetString(mso.ToArray());
+            }
+        }
 
 		protected static void UnZipSubtitleFileToFile(string zipFileName, string subFileName) {
 			using (FileStream subFile = File.OpenWrite(subFileName))
