@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.IO;
+using System.IO.Compression;
 using System.Net;
 using OSDBnet.Backend;
-using ICSharpCode.SharpZipLib.GZip;
 using CookComputing.XmlRpc;
 
 namespace OSDBnet {
@@ -20,13 +20,13 @@ namespace OSDBnet {
 			this.proxy = proxy;
 		}
 
-		internal void Login(string language, string userAgent) {
-			LoginResponse response = proxy.Login(string.Empty, string.Empty, language, userAgent);
+		internal void Login(string username, string password, string language, string userAgent) {
+			LoginResponse response = proxy.Login(username, password, language, userAgent);
 			VerifyResponseCode(response);
 			token = response.token;
 		}
 
-		public IList<Subtitle> SearchSubtitlesFromFile(string languages, string filename) {
+        public IList<Subtitle> SearchSubtitlesFromFile(string languages, string filename) {
 			if (string.IsNullOrEmpty(filename)) {
 				throw new ArgumentNullException("filename");
 			}
@@ -84,7 +84,12 @@ namespace OSDBnet {
 			return subtitles;
 		}
 
-		public string DownloadSubtitleToPath(string path, Subtitle subtitle) {
+	    public string DownloadSubtitleToPath(string path, Subtitle subtitle)
+	    {
+	        return DownloadSubtitleToPath(path, subtitle, null);
+	    }
+
+	    public string DownloadSubtitleToPath(string path, Subtitle subtitle, string newSubtitleName) {
 			if (string.IsNullOrEmpty(path)) {
 				throw new ArgumentNullException("path");
 			}
@@ -95,7 +100,7 @@ namespace OSDBnet {
 				throw new ArgumentException("path should point to a valid location");
 			}
 
-			string destinationfile = Path.Combine(path, subtitle.SubtitleFileName);
+			string destinationfile = Path.Combine(path, (string.IsNullOrEmpty(newSubtitleName)) ? subtitle.SubtitleFileName : newSubtitleName);
 			string tempZipName = Path.GetTempFileName();
 			try {
 				WebClient webClient = new WebClient();
@@ -265,42 +270,39 @@ namespace OSDBnet {
 		}
 
 		protected static byte[] GzipString(string str) {
-			using (MemoryStream outputMemory = new MemoryStream()) {
-				using (MemoryStream memoryStream = new MemoryStream(System.Text.Encoding.UTF8.GetBytes(str)))
-				using (GZipOutputStream outputStream = new GZipOutputStream(outputMemory)) {
-					memoryStream.CopyTo(outputStream);
-				}
-				return outputMemory.ToArray();
-			}
-		}
+            var bytes = Encoding.UTF8.GetBytes(str);
+
+            using (var msi = new MemoryStream(bytes))
+            using (var mso = new MemoryStream())
+            {
+                using (var gs = new GZipStream(mso, CompressionMode.Compress))
+                {
+                    msi.CopyTo(gs);
+                }
+
+                return mso.ToArray();
+            }
+        }
 
 		protected static string GUnzipString(byte[] gzippedString) {
-			using (MemoryStream inputMemory = new MemoryStream()) {
-				using (MemoryStream memoryStream = new MemoryStream(gzippedString))
-				using (GZipInputStream inputStream = new GZipInputStream(inputMemory)) {
-					inputStream.CopyTo(memoryStream);
-				}
-				var data = inputMemory.ToArray();
-				return System.Text.Encoding.UTF8.GetString(data);
-			}
-		}
+            using (var msi = new MemoryStream(gzippedString))
+            using (var mso = new MemoryStream())
+            {
+                using (var gs = new GZipStream(msi, CompressionMode.Decompress))
+                {
+                    gs.CopyTo(mso);
+                }
+
+                return Encoding.UTF8.GetString(mso.ToArray());
+            }
+        }
 
 		protected static void UnZipSubtitleFileToFile(string zipFileName, string subFileName) {
 			using (FileStream subFile = File.OpenWrite(subFileName))
 			using (FileStream tempFile = File.OpenRead(zipFileName)) {
-				var gzip = new GZipInputStream(tempFile);
-				var buffer = new byte[4096];
-				var bufferSize = 0;
-				var readCount = 0;
-
-				do {
-					bufferSize = gzip.Read(buffer, readCount, buffer.Length);
-					if (bufferSize > 0) {
-						subFile.Write(buffer, readCount, bufferSize);
-					}
-				} while (bufferSize > 0);
-				gzip.Dispose();
-			}
+				var gzip = new GZipStream(tempFile, CompressionMode.Decompress);
+                gzip.CopyTo(subFile);
+            }
 		}
 
 		protected static Subtitle BuildSubtitleObject(SearchSubtitlesInfo info) {

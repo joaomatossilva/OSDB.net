@@ -6,9 +6,10 @@ using System.Text;
 namespace OSDBnet {
 	public interface IAnonymousClient : IDisposable {
 		IList<Subtitle> SearchSubtitlesFromFile(string languages, string filename);
-		IList<Subtitle> SearchSubtitlesFromImdb(string languages, string imdbId);
+        IList<Subtitle> SearchSubtitlesFromImdb(string languages, string imdbId);
 		IList<Subtitle> SearchSubtitlesFromQuery(string languages, string query, int? season = null, int? episode = null);
 		string DownloadSubtitleToPath(string path, Subtitle subtitle);
+		string DownloadSubtitleToPath(string path, Subtitle subtitle, string newSubtitleName);
 		long CheckSubHash(string subHash);
 		IEnumerable<MovieInfo> CheckMovieHash(string moviehash);
 		IEnumerable<Language> GetSubLanguages(); 
