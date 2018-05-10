@@ -1,19 +1,23 @@
 ﻿using System;
 using CookComputing.XmlRpc;
 
-namespace OSDBnet.Backend {
+namespace OSDBnet.Backend
+{
 
-    public class ResponseBase {
+    public class ResponseBase
+    {
         public string status;
         public double seconds;
     }
 
     [XmlRpcMissingMapping(MappingAction.Ignore)]
-    public class LoginResponse : ResponseBase {
+    public class LoginResponse : ResponseBase
+    {
         public string token;
     }
 
-    public class SearchSubtitlesRequest {
+    public class SearchSubtitlesRequest
+    {
         public string sublanguageid = string.Empty;
         public string moviehash = string.Empty;
         public string moviebytesize = string.Empty;
@@ -26,12 +30,14 @@ namespace OSDBnet.Backend {
     }
 
     [XmlRpcMissingMapping(MappingAction.Ignore)]
-    public class SearchSubtitlesResponse : ResponseBase {
+    public class SearchSubtitlesResponse : ResponseBase
+    {
         public Object data;
     }
 
     [XmlRpcMissingMapping(MappingAction.Ignore)]
-    public class SearchSubtitlesInfo {
+    public class SearchSubtitlesInfo
+    {
         public string MatchedBy;
         public string IDSubMovieFile;
         public string MovieHash;
@@ -72,17 +78,20 @@ namespace OSDBnet.Backend {
     }
 
     [XmlRpcMissingMapping(MappingAction.Ignore)]
-    public class CheckSubHashResponse : ResponseBase {
+    public class CheckSubHashResponse : ResponseBase
+    {
         public Object data;
     }
 
     [XmlRpcMissingMapping(MappingAction.Ignore)]
-    public class CheckMovieHashResponse : ResponseBase {
+    public class CheckMovieHashResponse : ResponseBase
+    {
         public Object data;
     }
 
     [XmlRpcMissingMapping(MappingAction.Ignore)]
-    public class CheckMovieHashInfo {
+    public class CheckMovieHashInfo
+    {
         public string MovieHash;
         public string MovieImdbID;
         public string SeenCount;
@@ -91,35 +100,41 @@ namespace OSDBnet.Backend {
     }
 
     [XmlRpcMissingMapping(MappingAction.Ignore)]
-    public class GetSubLanguagesResponse : ResponseBase {
+    public class GetSubLanguagesResponse : ResponseBase
+    {
         public GetSubLanguagesInfo[] data;
     }
 
     [XmlRpcMissingMapping(MappingAction.Ignore)]
-    public class GetSubLanguagesInfo {
+    public class GetSubLanguagesInfo
+    {
         public string SubLanguageID;
         public string LanguageName;
         public string ISO639;
     }
 
     [XmlRpcMissingMapping(MappingAction.Ignore)]
-    public class SearchMoviesOnIMDBResponse : ResponseBase {
+    public class SearchMoviesOnIMDBResponse : ResponseBase
+    {
         public MoviesOnIMDBInfo[] data;
     }
 
     [XmlRpcMissingMapping(MappingAction.Ignore)]
-    public class MoviesOnIMDBInfo {
+    public class MoviesOnIMDBInfo
+    {
         public string id;
         public string title;
     }
 
     [XmlRpcMissingMapping(MappingAction.Ignore)]
-    public class GetIMDBMovieDetailsResponse : ResponseBase {
+    public class GetIMDBMovieDetailsResponse : ResponseBase
+    {
         public IMDBMovieDetails data;
     }
 
     [XmlRpcMissingMapping(MappingAction.Ignore)]
-    public class IMDBMovieDetails {
+    public class IMDBMovieDetails
+    {
         public object cast;
         public object writers;
         public string trivia;
@@ -138,17 +153,20 @@ namespace OSDBnet.Backend {
         public string year;
     }
 
-    public class ImdbPerson {
+    public class ImdbPerson
+    {
         public string id;
         public string name;
     }
 
     [XmlRpcMissingMapping(MappingAction.Ignore)]
-    public class GetCommentsResponse : ResponseBase {
+    public class GetCommentsResponse : ResponseBase
+    {
         public object data;
     }
 
-    public class CommentsData {
+    public class CommentsData
+    {
         public string IDSubtitle;
         public string UserID;
         public string UserNickName;
@@ -157,11 +175,13 @@ namespace OSDBnet.Backend {
     }
 
     [XmlRpcMissingMapping(MappingAction.Ignore)]
-    public class DetectLanguageResponse : ResponseBase {
+    public class DetectLanguageResponse : ResponseBase
+    {
         public object data;
     }
 
-    public struct ServerInfo {
+    public struct ServerInfo
+    {
         public string subs_downloads;
         public string movies_aka;
         public int users_loggedin;
@@ -181,7 +201,8 @@ namespace OSDBnet.Backend {
         public string website_url;
     }
 
-    public struct LastUpdate {
+    public struct LastUpdate
+    {
         public string ar;
         public string bg;
         public string ca;
