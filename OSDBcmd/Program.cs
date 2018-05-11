@@ -74,12 +74,9 @@ namespace OSDBcmd
 
         static void DownloadSubtitle(string movieFileName, bool lucky, IList<string> languages)
         {
-            var systemLanguage = GetSystemLanguage();
-            if (!languages.Contains(systemLanguage))
-                languages.Add(systemLanguage);
-            using (var osdb = Osdb.Login(systemLanguage, "OS Test User Agent"))
+            using (var osdb = Osdb.Create("TemporaryUserAgent"))
             {
-                var subtitles = osdb.SearchSubtitlesFromFile(languages.Aggregate((a, b) => a + "," + b), movieFileName);
+                var subtitles = osdb.SearchSubtitlesFromFile(languages.Aggregate((a, b) => a + "," + b), movieFileName).Result;
 
                 int subtitlesCount = subtitles.Count;
                 if (subtitlesCount == 0)
@@ -97,7 +94,7 @@ namespace OSDBcmd
                     }
                 }
 
-                string subtitleFile = osdb.DownloadSubtitleToPath(Path.GetDirectoryName(movieFileName), selectedSubtitle);
+                string subtitleFile = osdb.DownloadSubtitleToPath(Path.GetDirectoryName(movieFileName), selectedSubtitle).Result;
                 Console.WriteLine("Subtitle downloaded to '{0}'", subtitleFile);
             }
         }
