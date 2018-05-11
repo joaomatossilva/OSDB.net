@@ -1,47 +1,10 @@
-﻿using OSDBnet.Backend;
-using CookComputing.XmlRpc;
-
-namespace OSDBnet
+﻿namespace OSDBnet
 {
     public static class Osdb
     {
-
-        private static IOsdb proxyInstance;
-        private static IOsdb Proxy
+        public static IOsdbClient Create(string userAgent)
         {
-            get
-            {
-                if (proxyInstance == null)
-                {
-                    proxyInstance = XmlRpcProxyGen.Create<IOsdb>();
-                }
-                return proxyInstance;
-            }
-        }
-
-        public static object ServerInfo()
-        {
-            var response = Proxy.ServerInfo();
-            return response;
-        }
-
-        public static IAnonymousClient Login(string userAgent)
-        {
-            var systemLanguage = GetSystemLanguage();
-            return Login(systemLanguage, userAgent);
-        }
-
-        public static IAnonymousClient Login(string language, string userAgent)
-        {
-            var client = new AnonymousClient(Proxy);
-            client.Login(string.Empty, string.Empty, language, userAgent);
-            return client;
-        }
-
-        public static IAnonymousClient Login(string username, string password, string language, string userAgent)
-        {
-            var client = new AnonymousClient(Proxy);
-            client.Login(username, password, language, userAgent);
+            var client = new OsdbClient(userAgent);
             return client;
         }
 
