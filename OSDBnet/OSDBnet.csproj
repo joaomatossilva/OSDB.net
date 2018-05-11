@@ -1,14 +1,20 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netstandard1.3</TargetFramework>
-    <Version>2.0.0</Version>
+	<TargetFrameworks>netstandard1.3;net452</TargetFrameworks>
+	<Version>2.0.0</Version>
   </PropertyGroup>
 
-  <ItemGroup>
-    <PackageReference Include="Newtonsoft.Json" Version="11.0.2" />
-    <PackageReference Include="System.IO" Version="4.3.0" />
-    <PackageReference Include="System.Runtime.Extensions" Version="4.3.0" />
+	<ItemGroup Condition="'$(TargetFramework)' == 'net452'">
+		<PackageReference Include="Microsoft.Net.Http">
+			<Version>2.2.29</Version>
+		</PackageReference>
+	</ItemGroup>
+
+	<ItemGroup>
+	<PackageReference Include="Newtonsoft.Json" Version="11.0.2" />
+	<PackageReference Include="System.IO" Version="4.3.0" />
+	<PackageReference Include="System.Runtime.Extensions" Version="4.3.0" />
   </ItemGroup>
 
 </Project>
