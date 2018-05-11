@@ -6,7 +6,9 @@ using System.IO;
 using System.IO.Compression;
 using System.Net;
 using OSDBnet.Backend;
-using CookComputing.XmlRpc;
+using Spooky.XmlRpc;
+using System.Threading.Tasks;
+using System.Net.Http;
 
 namespace OSDBnet
 {
@@ -15,22 +17,24 @@ namespace OSDBnet
 
         private bool disposed = false;
 
-        protected readonly IOsdb proxy;
+        protected readonly XmlRpcHttpClient proxy;
         protected string token;
 
-        internal AnonymousClient(IOsdb proxy)
+        internal AnonymousClient(XmlRpcHttpClient proxy)
         {
             this.proxy = proxy;
         }
 
-        internal void Login(string username, string password, string language, string userAgent)
+        internal async Task Login(string username, string password, string language, string userAgent)
         {
-            LoginResponse response = proxy.Login(username, password, language, userAgent);
-            VerifyResponseCode(response);
-            token = response.token;
+            var response = await proxy.Invoke<object>("Login", username, password, language, userAgent)
+                .ConfigureAwait(false);
+            //VerifyResponseCode(response);
+            //token = response.token;
+            token = String.Empty;
         }
 
-        public IList<Subtitle> SearchSubtitlesFromFile(string languages, string filename)
+        public Task<IList<Subtitle>> SearchSubtitlesFromFile(string languages, string filename)
         {
             if (string.IsNullOrEmpty(filename))
             {
@@ -51,7 +55,7 @@ namespace OSDBnet
             return SearchSubtitlesInternal(request);
         }
 
-        public IList<Subtitle> SearchSubtitlesFromImdb(string languages, string imdbId)
+        public Task<IList<Subtitle>> SearchSubtitlesFromImdb(string languages, string imdbId)
         {
             if (string.IsNullOrEmpty(imdbId))
             {
@@ -65,7 +69,7 @@ namespace OSDBnet
             return SearchSubtitlesInternal(request);
         }
 
-        public IList<Subtitle> SearchSubtitlesFromQuery(string languages, string query, int? season = null, int? episode = null)
+        public Task<IList<Subtitle>> SearchSubtitlesFromQuery(string languages, string query, int? season = null, int? episode = null)
         {
             if (string.IsNullOrEmpty(query))
             {
@@ -81,9 +85,10 @@ namespace OSDBnet
             return SearchSubtitlesInternal(request);
         }
 
-        private IList<Subtitle> SearchSubtitlesInternal(SearchSubtitlesRequest request)
+        private async Task<IList<Subtitle>> SearchSubtitlesInternal(SearchSubtitlesRequest request)
         {
-            var response = proxy.SearchSubtitles(token, new SearchSubtitlesRequest[] { request });
+            var response = await proxy.Invoke<SearchSubtitlesResponse>("SearchSubtitles", token, new SearchSubtitlesRequest[] { request })
+                .ConfigureAwait(false);
             VerifyResponseCode(response);
 
             var subtitles = new List<Subtitle>();
@@ -93,19 +98,19 @@ namespace OSDBnet
             {
                 foreach (var infoObject in subtitlesInfo)
                 {
-                    var subInfo = SimpleObjectMapper.MapToObject<SearchSubtitlesInfo>((XmlRpcStruct)infoObject);
-                    subtitles.Add(BuildSubtitleObject(subInfo));
+                    //var subInfo = SimpleObjectMapper.MapToObject<SearchSubtitlesInfo>((XmlRpcStruct)infoObject);
+                    //subtitles.Add(BuildSubtitleObject(subInfo));
                 }
             }
             return subtitles;
         }
 
-        public string DownloadSubtitleToPath(string path, Subtitle subtitle)
+        public Task<string> DownloadSubtitleToPath(string path, Subtitle subtitle)
         {
             return DownloadSubtitleToPath(path, subtitle, null);
         }
 
-        public string DownloadSubtitleToPath(string path, Subtitle subtitle, string newSubtitleName)
+        public async Task<string> DownloadSubtitleToPath(string path, Subtitle subtitle, string newSubtitleName)
         {
             if (string.IsNullOrEmpty(path))
             {
@@ -121,65 +126,58 @@ namespace OSDBnet
             }
 
             string destinationfile = Path.Combine(path, (string.IsNullOrEmpty(newSubtitleName)) ? subtitle.SubtitleFileName : newSubtitleName);
-            string tempZipName = Path.GetTempFileName();
-            try
-            {
-                WebClient webClient = new WebClient();
-                webClient.DownloadFile(subtitle.SubTitleDownloadLink, tempZipName);
-
-                UnZipSubtitleFileToFile(tempZipName, destinationfile);
-
-            }
-            finally
-            {
-                File.Delete(tempZipName);
-            }
+            var client = new HttpClient();
+            var zipStream = await client.GetStreamAsync(subtitle.SubTitleDownloadLink)
+                .ConfigureAwait(false);
+            await UnZipSubtitleFileToFile(zipStream, destinationfile)
+                .ConfigureAwait(false);
 
             return destinationfile;
         }
 
-        public long CheckSubHash(string subHash)
+        public async Task<long> CheckSubHash(string subHash)
         {
-            var response = proxy.CheckSubHash(token, new string[] { subHash });
+            var response = await proxy.Invoke<CheckSubHashResponse>("CheckSubHash", token, new string[] { subHash });
             VerifyResponseCode(response);
 
             long idSubtitleFile = 0;
-            var hashInfo = response.data as XmlRpcStruct;
-            if (null != hashInfo && hashInfo.ContainsKey(subHash))
-            {
-                idSubtitleFile = Convert.ToInt64(hashInfo[subHash]);
-            }
+            //var hashInfo = response.data as XmlRpcStruct;
+            //if (null != hashInfo && hashInfo.ContainsKey(subHash))
+            //{
+            //    idSubtitleFile = Convert.ToInt64(hashInfo[subHash]);
+            //}
 
             return idSubtitleFile;
         }
 
-        public IEnumerable<MovieInfo> CheckMovieHash(string moviehash)
+        public async Task<IEnumerable<MovieInfo>> CheckMovieHash(string moviehash)
         {
-            var response = proxy.CheckMovieHash(token, new string[] { moviehash });
+            var response = await proxy.Invoke<CheckMovieHashResponse>("CheckMovieHash", token, new string[] { moviehash })
+                .ConfigureAwait(false);
             VerifyResponseCode(response);
 
             var movieInfoList = new List<MovieInfo>();
 
-            var hashInfo = response.data as XmlRpcStruct;
-            if (null != hashInfo && hashInfo.ContainsKey(moviehash))
-            {
-                var movieInfoArray = hashInfo[moviehash] as object[];
-                foreach (XmlRpcStruct movieInfoStruct in movieInfoArray)
-                {
-                    var movieInfo = SimpleObjectMapper.MapToObject<CheckMovieHashInfo>(movieInfoStruct);
-                    movieInfoList.Add(BuildMovieInfoObject(movieInfo));
-                }
-            }
+            //var hashInfo = response.data as XmlRpcStruct;
+            //if (null != hashInfo && hashInfo.ContainsKey(moviehash))
+            //{
+            //    var movieInfoArray = hashInfo[moviehash] as object[];
+            //    foreach (XmlRpcStruct movieInfoStruct in movieInfoArray)
+            //    {
+            //        var movieInfo = SimpleObjectMapper.MapToObject<CheckMovieHashInfo>(movieInfoStruct);
+            //        movieInfoList.Add(BuildMovieInfoObject(movieInfo));
+            //    }
+            //}
 
             return movieInfoList;
         }
-
+        /*
         public IEnumerable<Language> GetSubLanguages()
         {
             //get system language
             return GetSubLanguages("en");
         }
-
+        
         public IEnumerable<Language> GetSubLanguages(string language)
         {
             var response = proxy.GetSubLanguages(language);
@@ -278,7 +276,7 @@ namespace OSDBnet
             var response = proxy.ReportWrongMovieHash(token, idSubMovieFile);
             VerifyResponseCode(response);
         }
-
+        */
         public void Dispose()
         {
             Dispose(true);
@@ -293,7 +291,7 @@ namespace OSDBnet
                 {
                     try
                     {
-                        proxy.Logout(token);
+                        proxy.Invoke<object>("Logout", token);
                     }
                     catch
                     {
@@ -351,13 +349,13 @@ namespace OSDBnet
             }
         }
 
-        protected static void UnZipSubtitleFileToFile(string zipFileName, string subFileName)
+        protected static async Task UnZipSubtitleFileToFile(Stream zipStream, string subFileName)
         {
             using (FileStream subFile = File.OpenWrite(subFileName))
-            using (FileStream tempFile = File.OpenRead(zipFileName))
             {
-                var gzip = new GZipStream(tempFile, CompressionMode.Decompress);
-                gzip.CopyTo(subFile);
+                var gzip = new GZipStream(zipStream, CompressionMode.Decompress);
+                await gzip.CopyToAsync(subFile)
+                    .ConfigureAwait(false);
             }
         }
 
@@ -418,29 +416,29 @@ namespace OSDBnet
             return movie;
         }
 
-        protected static MovieDetails BuildMovieDetailsObject(IMDBMovieDetails info)
-        {
-            var movie = new MovieDetails
-            {
-                Aka = info.aka,
-                Cast = SimpleObjectMapper.MapToDictionary(info.cast as XmlRpcStruct),
-                Cover = info.cover,
-                Id = info.id,
-                Rating = info.rating,
-                Title = info.title,
-                Votes = info.votes,
-                Year = info.year,
-                Country = info.country,
-                Directors = SimpleObjectMapper.MapToDictionary(info.directors as XmlRpcStruct),
-                Duration = info.duration,
-                Genres = info.genres,
-                Language = info.language,
-                Tagline = info.tagline,
-                Trivia = info.trivia,
-                Writers = SimpleObjectMapper.MapToDictionary(info.writers as XmlRpcStruct)
-            };
-            return movie;
-        }
+        //protected static MovieDetails BuildMovieDetailsObject(IMDBMovieDetails info)
+        //{
+        //    var movie = new MovieDetails
+        //    {
+        //        Aka = info.aka,
+        //        Cast = SimpleObjectMapper.MapToDictionary(info.cast as XmlRpcStruct),
+        //        Cover = info.cover,
+        //        Id = info.id,
+        //        Rating = info.rating,
+        //        Title = info.title,
+        //        Votes = info.votes,
+        //        Year = info.year,
+        //        Country = info.country,
+        //        Directors = SimpleObjectMapper.MapToDictionary(info.directors as XmlRpcStruct),
+        //        Duration = info.duration,
+        //        Genres = info.genres,
+        //        Language = info.language,
+        //        Tagline = info.tagline,
+        //        Trivia = info.trivia,
+        //        Writers = SimpleObjectMapper.MapToDictionary(info.writers as XmlRpcStruct)
+        //    };
+        //    return movie;
+        //}
 
         protected static UserComment BuildUserCommentObject(CommentsData info)
         {

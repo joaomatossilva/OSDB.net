@@ -1,5 +1,4 @@
 ﻿using System;
-using CookComputing.XmlRpc;
 
 namespace OSDBnet.Backend
 {
@@ -10,7 +9,7 @@ namespace OSDBnet.Backend
         public double seconds;
     }
 
-    [XmlRpcMissingMapping(MappingAction.Ignore)]
+    //[XmlRpcMissingMapping(MappingAction.Ignore)]
     public class LoginResponse : ResponseBase
     {
         public string token;
@@ -23,19 +22,19 @@ namespace OSDBnet.Backend
         public string moviebytesize = string.Empty;
         public string imdbid = string.Empty;
         public string query = string.Empty;
-        [XmlRpcMissingMapping(MappingAction.Ignore)]
+        //[XmlRpcMissingMapping(MappingAction.Ignore)]
         public int? season = null;
-        [XmlRpcMissingMapping(MappingAction.Ignore)]
+        //[XmlRpcMissingMapping(MappingAction.Ignore)]
         public int? episode = null;
     }
 
-    [XmlRpcMissingMapping(MappingAction.Ignore)]
+    //[XmlRpcMissingMapping(MappingAction.Ignore)]
     public class SearchSubtitlesResponse : ResponseBase
     {
         public Object data;
     }
 
-    [XmlRpcMissingMapping(MappingAction.Ignore)]
+    //[XmlRpcMissingMapping(MappingAction.Ignore)]
     public class SearchSubtitlesInfo
     {
         public string MatchedBy;
@@ -77,19 +76,19 @@ namespace OSDBnet.Backend
         public string SubtitlesLink;
     }
 
-    [XmlRpcMissingMapping(MappingAction.Ignore)]
+    //[XmlRpcMissingMapping(MappingAction.Ignore)]
     public class CheckSubHashResponse : ResponseBase
     {
         public Object data;
     }
 
-    [XmlRpcMissingMapping(MappingAction.Ignore)]
+    //[XmlRpcMissingMapping(MappingAction.Ignore)]
     public class CheckMovieHashResponse : ResponseBase
     {
         public Object data;
     }
 
-    [XmlRpcMissingMapping(MappingAction.Ignore)]
+    //[XmlRpcMissingMapping(MappingAction.Ignore)]
     public class CheckMovieHashInfo
     {
         public string MovieHash;
@@ -99,13 +98,13 @@ namespace OSDBnet.Backend
         public string MovieName;
     }
 
-    [XmlRpcMissingMapping(MappingAction.Ignore)]
+    //[XmlRpcMissingMapping(MappingAction.Ignore)]
     public class GetSubLanguagesResponse : ResponseBase
     {
         public GetSubLanguagesInfo[] data;
     }
 
-    [XmlRpcMissingMapping(MappingAction.Ignore)]
+    //[XmlRpcMissingMapping(MappingAction.Ignore)]
     public class GetSubLanguagesInfo
     {
         public string SubLanguageID;
@@ -113,26 +112,26 @@ namespace OSDBnet.Backend
         public string ISO639;
     }
 
-    [XmlRpcMissingMapping(MappingAction.Ignore)]
+    //[XmlRpcMissingMapping(MappingAction.Ignore)]
     public class SearchMoviesOnIMDBResponse : ResponseBase
     {
         public MoviesOnIMDBInfo[] data;
     }
 
-    [XmlRpcMissingMapping(MappingAction.Ignore)]
+    //[XmlRpcMissingMapping(MappingAction.Ignore)]
     public class MoviesOnIMDBInfo
     {
         public string id;
         public string title;
     }
 
-    [XmlRpcMissingMapping(MappingAction.Ignore)]
+    //[XmlRpcMissingMapping(MappingAction.Ignore)]
     public class GetIMDBMovieDetailsResponse : ResponseBase
     {
         public IMDBMovieDetails data;
     }
 
-    [XmlRpcMissingMapping(MappingAction.Ignore)]
+    //[XmlRpcMissingMapping(MappingAction.Ignore)]
     public class IMDBMovieDetails
     {
         public object cast;
@@ -159,7 +158,7 @@ namespace OSDBnet.Backend
         public string name;
     }
 
-    [XmlRpcMissingMapping(MappingAction.Ignore)]
+    //[XmlRpcMissingMapping(MappingAction.Ignore)]
     public class GetCommentsResponse : ResponseBase
     {
         public object data;
@@ -174,7 +173,7 @@ namespace OSDBnet.Backend
         public string Created;
     }
 
-    [XmlRpcMissingMapping(MappingAction.Ignore)]
+    //[XmlRpcMissingMapping(MappingAction.Ignore)]
     public class DetectLanguageResponse : ResponseBase
     {
         public object data;

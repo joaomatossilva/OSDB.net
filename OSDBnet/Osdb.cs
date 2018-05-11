@@ -1,19 +1,20 @@
-﻿using OSDBnet.Backend;
-using CookComputing.XmlRpc;
+﻿using System;
+using System.Threading.Tasks;
+using Spooky.XmlRpc;
 
 namespace OSDBnet
 {
     public static class Osdb
     {
 
-        private static IOsdb proxyInstance;
-        private static IOsdb Proxy
+        private static XmlRpcHttpClient proxyInstance;
+        private static XmlRpcHttpClient Proxy
         {
             get
             {
                 if (proxyInstance == null)
                 {
-                    proxyInstance = XmlRpcProxyGen.Create<IOsdb>();
+                    proxyInstance = new XmlRpcHttpClient(new Uri("http://api.opensubtitles.org/xml-rpc"));
                 }
                 return proxyInstance;
             }
@@ -21,27 +22,30 @@ namespace OSDBnet
 
         public static object ServerInfo()
         {
-            var response = Proxy.ServerInfo();
+            var response = Proxy.Invoke<object>("ServerInfo");
             return response;
         }
 
-        public static IAnonymousClient Login(string userAgent)
+        public static async Task<IAnonymousClient> Login(string userAgent)
         {
             var systemLanguage = GetSystemLanguage();
-            return Login(systemLanguage, userAgent);
+            return await Login(systemLanguage, userAgent)
+                .ConfigureAwait(false);
         }
 
-        public static IAnonymousClient Login(string language, string userAgent)
+        public static async Task<IAnonymousClient> Login(string language, string userAgent)
         {
             var client = new AnonymousClient(Proxy);
-            client.Login(string.Empty, string.Empty, language, userAgent);
+            await client.Login(string.Empty, string.Empty, language, userAgent)
+                .ConfigureAwait(false);
             return client;
         }
 
-        public static IAnonymousClient Login(string username, string password, string language, string userAgent)
+        public static async Task<IAnonymousClient> Login(string username, string password, string language, string userAgent)
         {
             var client = new AnonymousClient(Proxy);
-            client.Login(username, password, language, userAgent);
+            await client.Login(username, password, language, userAgent)
+                .ConfigureAwait(false);
             return client;
         }
 

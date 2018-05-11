@@ -1,24 +1,25 @@
-﻿using System.Configuration;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using NUnit.Framework;
 
 namespace OSDBnet.Tests
 {
-    [TestClass]
+    [TestFixture]
     public class QueryTests
     {
-        [TestMethod]
+        private const string UserAgent = "a";
+
+        [Test]
         public void CanSearchWithSeasonAndEpisode()
         {
-            var client = Osdb.Login("en", ConfigurationManager.AppSettings["TestUserAgent"]);
-            var results = client.SearchSubtitlesFromQuery("en", "Arrow", 1, 1);
+            var client = Osdb.Login("en", UserAgent).Result;
+            var results = client.SearchSubtitlesFromQuery("en", "Arrow", 1, 1).Result;
             Assert.IsTrue(results.Count > 0);
         }
 
-        [TestMethod]
+        [Test]
         public void CanSearchOnlyText()
         {
-            var client = Osdb.Login("en", ConfigurationManager.AppSettings["TestUserAgent"]);
-            var results = client.SearchSubtitlesFromQuery("en", "Arrow");
+            var client = Osdb.Login("en", UserAgent).Result;
+            var results = client.SearchSubtitlesFromQuery("en", "Arrow").Result;
             Assert.IsTrue(results.Count > 0);
         }
     }
