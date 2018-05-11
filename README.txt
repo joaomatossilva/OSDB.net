@@ -13,8 +13,6 @@ TOC
 1. Introduction
 2. Building/Installing
 3. OSDB Coverage Status
-4. RoadMap
-5. Version History
 
 
 
@@ -22,7 +20,7 @@ TOC
 -----------------------
 
 OSDB.net is a .Net library to wrap the OSDB (Open Subtitles Database) protocol 
-described here: http://trac.opensubtitles.org/projects/opensubtitles/wiki/OSDb
+described here: https://forum.opensubtitles.org/viewtopic.php?f=8&t=16453&sid=f821df068da21f743a0e89a36827e8a1
 
 
 2. Building/Installing
@@ -32,94 +30,14 @@ The fastest and cleaner way to install this library is using the NuGet tool:
 PM> Install-Package OSDBnet
 
 If you want to compile it from source, first download/fork/clone directly from 
-the repository git://github.com/kappy/OSDB.net.git and you can open the OSDB.sln
-file in Visual Studio 2010.
+the repository git://github.com/joaomatossilva/OSDB.net.git and you can open the OSDBnet.sln
+file in Visual Studio.
 
 
 3. OSDB Coverage Status
 ------------------------
 
-- Fully Supported Methods:
-ServerInfo
-LogOut
-SearchSubtitles
-CheckSubHash
-CheckMovieHash
-GetSubLanguages 
-SearchMoviesOnIMDB
-GetIMDBMovieDetails
-NoOperation
-GetComments
-DetectLanguage (seems buggy)
-ReportWrongMovieHash
-
-- Half Supported Methods:
-LogIn ( missing user, only anonymous supported )
-
-- Not yet Supported:
-SearchToMail
-InsertMovieHash
-TryUploadSubtitles
-UploadSubtitles
-DownloadSubtitles ( download is done directly by http)
-InsertMovie
-SubtitlesVote
-AddComment
-AddRequest
-
-- Will not be implemented (this method are program specific 'subdownloader' or 'oscar'):
-GetAvailableTranslations
-GetTranslation
-AutoUpdate
+Only the REST api is supported. For the legacy xmlrpc version see the 0.4.0 version
+(https://www.nuget.org/packages/OSDBnet/0.4.0)
 
 
-4. RoadMap
-------------------------
-
-v1.0 - Fisrt Realease
-tentative release date: N/A
-
-For this version the library should be very well tested and should have a coverage
-of the OSDB protocol of 100%
-
-----
-v0.6
-tentative release date: N/A
-
-Refactoring of internal aplication. This version should the the final official release
-
-----
-v0.5
-tentative release date: N/A
-
-Added upload and new movies insert coverage
-
-----
-v0.4
-tentative release date: 2011-10-30
-
-This version should include logged users only available methods
-
-
-5. Version History
------------------------
-
-v0.3 - 2011-10-04
-Increased OSDB coverage on methods:
--NoOperation
--GetComments
--DetectLanguage (seems buggy)
--ReportWrongMovieHash
-
-v0.2 - 2011-09-29
-Increased OSDB coverage on methods:
--CheckSubHash
--CheckMovieHash
--GetSubLanguages
--SearchMoviesOnImdb
--GetIMDBMovieDetails
-
-
-v0.1 - 2011-09-27
-First relase.
-OSDB Coverage only limited to anonymous login and search subtitles from hash
