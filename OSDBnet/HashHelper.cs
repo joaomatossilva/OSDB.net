@@ -44,7 +44,6 @@ namespace OSDBnet
 				i++;
 				lhash += BitConverter.ToInt64(buffer, 0);
 			}
-			input.Close();
 			byte[] result = BitConverter.GetBytes(lhash);
 			Array.Reverse(result);
 			return result;
